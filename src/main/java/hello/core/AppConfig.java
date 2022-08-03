@@ -13,15 +13,19 @@ public class AppConfig {
     //-> 구현 객체들은 인터페이스에만의존 + 구현객체를 생성,주입하는 것은 외부에서
 
     public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
-
     public OrderService orderService() {
         return new OrderServiceImpl(
-                new MemoryMemberRepository(),
-                new FixDiscountPolicy());
+                memberRepository(), DiscountPolicy());
     }
 
+    private MemoryMemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+    private FixDiscountPolicy DiscountPolicy() {
+        return new FixDiscountPolicy();
+    }
 
 
 }
