@@ -10,15 +10,16 @@ import hello.core.order.OrderServiceImpl;
 
 public class OrderApp {
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
-
+        AppConfig appConfig = new AppConfig();
+        //appconfig를 통해 memberService 꺼냄
+        MemberService memberService = appConfig.memberService();
         Long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
         memberService.join(member);
 
-        Order order = orderService.createOrder(memberId, "itemA", 10000); //order 생성
-
+        //orderService 꺼냄
+        OrderService orderService = appConfig.orderService();
+        Order order = orderService.createOrder(memberId,"itemA",10000);
         System.out.println("order = " + order); //toString 으로 출력 됨
     }
 }
