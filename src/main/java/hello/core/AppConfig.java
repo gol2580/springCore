@@ -19,8 +19,10 @@ public class AppConfig {
 
     //중복되는 파라미터 생성은 메소드로 뺌
     @Bean
-    public MemberRepository memberRepository() { return new MemoryMemberRepository(); }
-    @Bean
+    public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
+        return new MemoryMemberRepository();
+    }
     public DiscountPolicy DiscountPolicy() {
         //return new FixDiscountPolicy(); : 생성,반환부만 변경하면 구현체 변경가능
         return new RateDiscountPolicy();
@@ -28,10 +30,12 @@ public class AppConfig {
 
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
     @Bean
     public OrderService orderService() {
+        System.out.println("call  AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), DiscountPolicy());
     }
 
